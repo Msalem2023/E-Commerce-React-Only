@@ -1,24 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Layout from "./Pages/layout.js";
+import Corousel from "./HomePage.js";
+import Product from "./Products.js";
+import Selected from "./SelectedProduct.js";
+import AmazonCart from "./AmazonCart.js";
+const router = createBrowserRouter([{
+  path: "/", element: <Layout />, children: [{
+    path: "", element: <Corousel />
+  },
+  {
+    path: ":id", children: [{
+      index: true, element: <Product />
+    },
+    {
+      path: "products/:productId", element: <Selected />
+    }],
+  }, { path: "cart", element: <AmazonCart /> }
+  ]
+}])
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router} />
   );
 }
 
